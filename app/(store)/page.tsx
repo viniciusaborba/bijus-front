@@ -1,3 +1,4 @@
+import { Header } from "@/components/ui/header";
 import { api } from "@/service/api";
 
 interface GetUserResponse {
@@ -11,14 +12,15 @@ async function getUser(userId: string) {
 }
 
 export default async function Home() {
-  const { user } = await getUser("869800f8-096d-42dc-be00-73aa495ddcf2");
+  // const { user } = await getUser("869800f8-096d-42dc-be00-73aa495ddcf2");
 
   return (
-    <div>
-      {user.email}
+    <div className="">
+      {/* {user.email}
       {user.address}
       {user.role}
-      {user.name}
+      {user.name} */}
+      hello world
     </div>
   );
 }

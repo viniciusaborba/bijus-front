@@ -14,6 +14,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { api } from "@/service/api";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const signUpFormSchema = z.object({
   email: z.string().email(),
@@ -31,12 +34,36 @@ export function SignUpForm() {
     defaultValues: {
       email: "",
       password: "",
+      cellphoneNumber: "",
+      name: "",
+      address: "",
+      cpf: "",
     },
     resolver: zodResolver(signUpFormSchema),
   });
 
-  function onSubmit(data: SignUpFormSchemaType) {
-    console.log(data);
+  const router = useRouter();
+  const { toast } = useToast();
+
+  async function onSubmit(data: SignUpFormSchemaType) {
+    try {
+      const response = await api.post("/users", {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        address: data.address,
+        cpf: data.cpf,
+        cellphoneNumber: data.cellphoneNumber,
+      });
+
+      router.push("/sign-in");
+      toast({
+        title: "Acesso criado!",
+        description: "Realize o seu login!"
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

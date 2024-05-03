@@ -6,7 +6,7 @@ import {
   MenuIcon,
   PercentIcon,
   ShoppingCartIcon,
-  LogInIcon,
+  LogOutIcon,
 } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
@@ -20,9 +20,19 @@ import {
 } from "./sheet";
 import Link from "next/link";
 import Cart from "./cart";
-// import Cart from "./cart";
+import { useCookies } from "next-client-cookies";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
+  const cookies = useCookies();
+  const router = useRouter();
+
+  const handleLogOut = () => {
+    cookies.remove("bijus-token");
+
+    router.refresh();
+  };
+
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
       <Sheet>
@@ -81,9 +91,10 @@ export const Header = () => {
                 <Button
                   variant="outline"
                   className="w-full justify-start gap-2"
+                  onClick={handleLogOut}
                 >
-                  <LogInIcon size={16} />
-                  Fazer login
+                  <LogOutIcon size={16} />
+                  Sair
                 </Button>
               </Link>
             </SheetClose>

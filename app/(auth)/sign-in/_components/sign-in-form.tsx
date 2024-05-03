@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { api } from "@/service/api";
 import { useRouter } from "next/navigation";
+import { useCookies } from "next-client-cookies";
 
 const signInFormSchema = z.object({
   email: z.string().email(),
@@ -33,6 +34,8 @@ export function SigInForm() {
     resolver: zodResolver(signInFormSchema),
   });
 
+  const cookies = useCookies();
+
   const router = useRouter();
 
   async function onSubmit(data: SignInFormSchemaType) {
@@ -42,10 +45,8 @@ export function SigInForm() {
         password: data.password,
       });
 
-      localStorage.setItem(
-        "@bijus:token",
-        JSON.stringify({ token: response.data.token })
-      );
+      cookies.set("bijus-token", response.data.token);
+      // cookies().set("bijus-token", response.data.token);
 
       router.push("/");
     } catch (error) {

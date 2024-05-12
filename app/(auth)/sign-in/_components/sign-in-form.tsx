@@ -46,7 +46,7 @@ export function SigInForm() {
       });
 
       cookies.set("bijus-token", response.data.token);
-      // cookies().set("bijus-token", response.data.token);
+      cookies.set("user_name", response.data.name);
 
       router.push("/");
     } catch (error) {

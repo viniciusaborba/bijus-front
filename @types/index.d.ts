@@ -8,3 +8,11 @@ interface User {
   password: string;
   role: 'ADMIN' | 'USER'
 }
+
+interface Category {
+  id: string
+  name: string
+  imageUrl: string
+  slug: string
+  products: []
+}

@@ -10,8 +10,6 @@ const CategoryProducts = async ({ params }: any) => {
 
   const category: Category = data.category;
 
-  console.log(category);
-
   return (
     <div className="flex flex-col p-5 gap-8 w-full border border-purple-light rounded-lg">
       <Badge

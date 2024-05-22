@@ -14,7 +14,7 @@ interface Category {
   name: string;
   imageUrl: string;
   slug: string;
-  products: [];
+  products: Product[]
 }
 
 interface Product {

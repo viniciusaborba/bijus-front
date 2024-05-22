@@ -1,18 +1,29 @@
 interface User {
-  id: string
+  id: string;
   name: string;
   cellphoneNumber: string;
   cpf: string;
   email: string;
   address: string;
   password: string;
-  role: 'ADMIN' | 'USER'
+  role: "ADMIN" | "USER";
 }
 
 interface Category {
-  id: string
-  name: string
-  imageUrl: string
-  slug: string
-  products: []
+  id: string;
+  name: string;
+  imageUrl: string;
+  slug: string;
+  products: [];
+}
+
+interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  basePrice: number;
+  imageUrls: string[];
+  categoryId: string;
+  discountPercentage: number;
 }

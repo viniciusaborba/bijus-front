@@ -24,8 +24,6 @@ export default async function Home() {
   //   }
   // }, []);
 
-  // const necklaces: Product[] = await api.get("/products/list-by-slug");
-
   return (
     <div className="flex flex-col gap-8 py-8 w-screen">
       <WelcomeMessage />
@@ -36,7 +34,7 @@ export default async function Home() {
 
       <div>
         <SectionTitle>Colares</SectionTitle>
-        <ProductList  />
+        <ProductList slug="colares" />
       </div>
     </div>
   );

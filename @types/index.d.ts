@@ -26,4 +26,5 @@ interface Product {
   imageUrls: string[];
   categoryId: string;
   discountPercentage: number;
+  category: Category
 }

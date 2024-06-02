@@ -3,6 +3,8 @@ import ProductImages from "../_components/product-images";
 import ProductInfo from "../_components/product-info";
 import { SectionTitle } from "@/components/section-title";
 import { api } from "@/service/api";
+import { ProductList } from "@/components/product-list";
+import { ProductListArray } from "@/components/product-list-array";
 
 interface ProductDetailsProps {
   params: {
@@ -26,7 +28,7 @@ const ProductDetails = async ({ params: { slug } }: ProductDetailsProps) => {
 
       <div>
         <SectionTitle>Produtos recomendados</SectionTitle>
-        {/* <ProductList products={product.category.products} /> */}
+        <ProductListArray products={product.category.products} />
       </div>
     </div>
   );

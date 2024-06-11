@@ -2,10 +2,16 @@
 
 import { ShoppingCartIcon } from "lucide-react";
 import { Badge } from "./badge";
-// import { computeProductTotalPrice } from "@/helpers/product";
 import { ScrollArea } from "./scroll-area";
+import { useContext } from "react";
+import { CartContext } from "@/app/providers/cart";
+import { computeProductTotalPrice } from "@/app/_helpers/product-with-total-price";
+import CartItem from "./cart-item";
+import CartPriceInfo from "./cart-price-info";
 
 const Cart = () => {
+  const { products } = useContext(CartContext);
+
   return (
     <div className="flex h-full flex-col gap-8">
       <Badge
@@ -18,7 +24,7 @@ const Cart = () => {
 
       <div className="flex h-full flex-col gap-5 max-h-full overflow-hidden">
         <ScrollArea className="h-full">
-          {/* <div className="flex h-full flex-col gap-5">
+          <div className="flex h-full flex-col gap-5">
             {products.length > 0 ? (
               products.map((product) => (
                 <>
@@ -33,19 +39,17 @@ const Cart = () => {
                 Você ainda não adicionou items ao carrinho!
               </p>
             )}
-          </div> */}
+          </div>
 
-          <div className="flex h-full flex-col gap-5">
+          {/* <div className="flex h-full flex-col gap-5">
             <p className="text-center font-semibold">
               Você ainda não adicionou items ao carrinho!
             </p>
-          </div>
+          </div> */}
         </ScrollArea>
       </div>
 
-      {/* {products.length > 0 && (
-        <CartPriceInfo />
-      )} */}
+      {products.length > 0 && <CartPriceInfo />}
     </div>
   );
 };

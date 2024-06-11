@@ -22,6 +22,8 @@ import Link from "next/link";
 import Cart from "./cart";
 import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
+import { useContext, useEffect } from "react";
+import { CartContext } from "@/app/providers/cart";
 
 export const Header = () => {
   const cookies = useCookies();
@@ -32,6 +34,8 @@ export const Header = () => {
 
     router.refresh();
   };
+
+  const { products } = useContext(CartContext)
 
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
@@ -109,8 +113,13 @@ export const Header = () => {
       </h1>
 
       <Sheet>
-        <SheetTrigger asChild>
+      <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="relative">
+            {products.length > 0 && (
+              <span className="absolute -right-3 -top-2 rounded-full bg-purple-dark px-1.5 text-white">
+                {products.length}
+              </span>
+            )}
             <ShoppingCartIcon />
           </Button>
         </SheetTrigger>

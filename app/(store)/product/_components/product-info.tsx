@@ -1,10 +1,13 @@
 "use client";
 
 import { ProductWithTotalPrice } from "@/app/_helpers/product-with-total-price";
+import { CartContext } from "@/app/providers/cart";
 import DiscountBadge from "@/components/discount-badge";
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, TruckIcon, } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, TruckIcon } from "lucide-react";
 import { useContext, useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useCookies } from "next-client-cookies";
 
 interface ProductDetailsProps {
   product: ProductWithTotalPrice;
@@ -13,7 +16,7 @@ interface ProductDetailsProps {
 const ProductInfo = ({ product }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
 
-//   const { addProductToCart } = useContext(CartContext);
+  const { addProductToCart } = useContext(CartContext);
 
   const handleDecreaseQuantity = () => {
     setQuantity((prev) => (prev === 1 ? prev : prev - 1));
@@ -23,9 +26,16 @@ const ProductInfo = ({ product }: ProductDetailsProps) => {
     setQuantity((prev) => prev + 1);
   };
 
-//   const handleAddProductToCart = () => {
-//     addProductToCart({ ...product, quantity });
-//   };
+  const { toast } = useToast();
+
+  const handleAddProductToCart = () => {
+    addProductToCart({ ...product, quantity });
+
+    toast({
+      title: "Produto adicionado ao carrinho!",
+      description: product.name,
+    });
+  };
 
   return (
     <div className="flex flex-col px-5">
@@ -65,7 +75,7 @@ const ProductInfo = ({ product }: ProductDetailsProps) => {
 
       <Button
         className="mt-8 font-bold uppercase bg-purple-dark hover:bg-purple"
-        // onClick={handleAddProductToCart}
+        onClick={handleAddProductToCart}
       >
         Adicionar ao carrinho
       </Button>

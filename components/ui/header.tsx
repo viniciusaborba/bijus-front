@@ -31,11 +31,12 @@ export const Header = () => {
 
   const handleLogOut = () => {
     cookies.remove("bijus-token");
+    cookies.remove("user_name");
 
     router.refresh();
   };
 
-  const { products } = useContext(CartContext)
+  const { products } = useContext(CartContext);
 
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
@@ -113,7 +114,7 @@ export const Header = () => {
       </h1>
 
       <Sheet>
-      <SheetTrigger asChild>
+        <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="relative">
             {products.length > 0 && (
               <span className="absolute -right-3 -top-2 rounded-full bg-purple-dark px-1.5 text-white">

@@ -40,7 +40,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setProducts(
-      JSON.parse(localStorage.getItem("@fsw-store/cart-products") || "[]")
+      JSON.parse(localStorage.getItem("bijus/cart-products") || "[]")
     );
   }, []);
 
@@ -66,23 +66,32 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     );
 
     if (productIsAlreadyOnCart) {
-      setProducts((prev) =>
-        prev.map((cartProduct) => {
-          if (cartProduct.id === product.id) {
-            return {
-              ...cartProduct,
-              quantity: cartProduct.quantity + product.quantity,
-            };
-          }
+      const updatedProducts = products.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            quantity: item.quantity + product.quantity,
+          };
+        }
 
-          return cartProduct;
-        })
+        return item;
+      });
+
+      setProducts(updatedProducts);
+
+      localStorage.setItem(
+        "bijus/cart-products",
+        JSON.stringify(updatedProducts)
       );
 
       return;
     }
 
     setProducts((prev) => [...prev, product]);
+    localStorage.setItem(
+      "bijus/cart-products",
+      JSON.stringify([...products, product])
+    );
   };
 
   const decreaseProductQuantity = (productId: string) => {

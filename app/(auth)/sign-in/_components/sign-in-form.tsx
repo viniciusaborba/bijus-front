@@ -17,10 +17,13 @@ import Link from "next/link";
 import { api } from "@/service/api";
 import { useRouter } from "next/navigation";
 import { useCookies } from "next-client-cookies";
+import { useToast } from "@/components/ui/use-toast";
 
 const signInFormSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().email({ message: "Informe um email válido" }),
+  password: z
+    .string({ message: "Informe uma senha válida" })
+    .min(6, { message: "Senha deve conter no mínimo 6 caracteres" }),
 });
 
 type SignInFormSchemaType = z.infer<typeof signInFormSchema>;
@@ -38,6 +41,8 @@ export function SigInForm() {
 
   const router = useRouter();
 
+  const { toast } = useToast();
+
   async function onSubmit(data: SignInFormSchemaType) {
     try {
       const response = await api.post("/sessions", {
@@ -50,7 +55,13 @@ export function SigInForm() {
 
       router.push("/");
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "Email ou senha inválidos!",
+        description: "Por favor, informe corretamente os campos.",
+        variant: "destructive",
+      });
+
+      form.reset();
     }
   }
 

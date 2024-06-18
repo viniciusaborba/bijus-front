@@ -19,12 +19,25 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 
 const signUpFormSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-  cellphoneNumber: z.string(),
-  name: z.string(),
-  address: z.string(),
-  cpf: z.string(),
+  email: z.string().email({ message: "Informe um email válido" }),
+  password: z
+    .string({ message: "Informe uma senha válida" })
+    .min(6, { message: "Senha deve conter no mínimo 6 caracteres" }),
+  cellphoneNumber: z
+    .string({ message: "Informe um número de telefone válido" })
+    .min(11, { message: "Informe o número de telefone com o DDD" }),
+  name: z
+    .string()
+    .min(2, { message: "O nome deve ter no mínimo 2 caracteres" }),
+  address: z
+    .string()
+    .min(5, { message: "O endereço deve ter no mínimo 2 caracteres" }),
+  cpf: z
+    .string()
+    .min(2, { message: "Informe um CPF válido" })
+    .regex(/^\d{3}.\d{3}.\d{3}-\d{2}$/, {
+      message: "Escreve um CPF válido",
+    }),
 });
 
 type SignUpFormSchemaType = z.infer<typeof signUpFormSchema>;
@@ -59,7 +72,7 @@ export function SignUpForm() {
       router.push("/sign-in");
       toast({
         title: "Acesso criado!",
-        description: "Realize o seu login!"
+        description: "Realize o seu login!",
       });
     } catch (error) {
       console.log(error);
@@ -124,7 +137,7 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>CPF</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Preencha o seu CPF" />
+                <Input {...field} placeholder="111.111.111-11" />
               </FormControl>
 
               <FormMessage />

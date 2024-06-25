@@ -41,7 +41,7 @@ const ProductImages = ({ imageUrls, name }: ProductImagesProps) => {
             className={`flex h-[6.25rem] items-center justify-center rounded-lg bg-accent hover:opacity-75 border border-purple-light
               ${
                 imageUrl === currentImage &&
-                "border-2 border-solid border-primary"
+                "border-2 border-solid border-purple-dark"
               }
               `}
             onClick={() => handleImageChange(imageUrl)}

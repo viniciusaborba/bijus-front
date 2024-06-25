@@ -1,12 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { api } from "@/service/api";
-import { useEffect, useState } from "react";
 import WelcomeMessage from "./_components/welcome-message";
 import { Categories } from "./_components/categories";
 import { SectionTitle } from "@/components/section-title";
 import { ProductList } from "@/components/product-list";
 import { ProductListArray } from "@/components/product-list-array";
-import { useCookies } from "next-client-cookies";
+import { getUserRole } from "./actions/get-user-role";
 
 interface GetUserResponse {
   user: User;
@@ -25,6 +23,8 @@ export default async function Home() {
   //     setToken(storedToken);
   //   }
   // }, []);
+
+  const userRole = await getUserRole();
 
   const { data } = await api.get("/products/offers");
 

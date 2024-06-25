@@ -127,9 +127,18 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeProductFromCart = (productId: string) => {
-    setProducts((prev) =>
-      prev.filter((cartProduct) => cartProduct.id !== productId)
-    );
+    setProducts((prev) => {
+      const updatedProducts = prev.filter(
+        (cartProduct) => cartProduct.id !== productId
+      );
+
+      localStorage.setItem(
+        "bijus/cart-products",
+        JSON.stringify(updatedProducts)
+      );
+
+      return updatedProducts;
+    });
   };
 
   return (

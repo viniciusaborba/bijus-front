@@ -32,6 +32,7 @@ export const Header = () => {
   const handleLogOut = () => {
     cookies.remove("bijus-token");
     cookies.remove("user_name");
+    cookies.remove("user_role");
 
     router.refresh();
   };

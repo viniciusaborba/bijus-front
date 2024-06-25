@@ -7,6 +7,9 @@ const nextConfig = {
       {
         hostname: "cdn.dooca.store",
       },
+      {
+        hostname: "encrypted-tbn0.gstatic.com",
+      },
     ],
   },
 };

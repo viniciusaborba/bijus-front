@@ -52,6 +52,7 @@ export function SigInForm() {
 
       cookies.set("bijus-token", response.data.token);
       cookies.set("user_name", response.data.name);
+      cookies.set("user_role", response.data.role);
 
       router.push("/");
     } catch (error) {

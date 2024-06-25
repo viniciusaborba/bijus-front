@@ -1,7 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { useCookies } from "next-client-cookies";
 
 const WelcomeMessage = () => {

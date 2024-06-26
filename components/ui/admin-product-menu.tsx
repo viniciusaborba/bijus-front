@@ -2,7 +2,7 @@
 
 import { ProductWithTotalPrice } from "@/app/_helpers/product-with-total-price";
 
-import { UserPlus, Pencil, Delete, CircleHelp } from "lucide-react";
+import { Pencil, Delete, CircleHelp } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,6 +30,9 @@ import {
   AlertDialogTrigger,
 } from "./alert-dialog";
 import { useRouter } from "next/navigation";
+import { api } from "@/service/api";
+import { useToast } from "./use-toast";
+import { useCookies } from "next-client-cookies";
 
 interface AdminProductMenuProps {
   product: ProductWithTotalPrice;
@@ -38,8 +41,29 @@ interface AdminProductMenuProps {
 const AdminProductMenu = ({ product }: AdminProductMenuProps) => {
   const router = useRouter();
 
+  const cookies = useCookies();
+
+  const token = cookies.get("bijus-token");
+
+  const { toast } = useToast();
+
+  const handleDeleteProduct = async () => {
+    await api.delete(`/products/${product.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    toast({
+      title: "Sucesso!",
+      description: "Produto excluído com sucesso!",
+    });
+
+    router.refresh();
+  };
+
   const handleCancelAction = () => {
-    router.push(`/product/${product.slug}`);
+    router.refresh();
   };
 
   return (
@@ -116,7 +140,7 @@ const AdminProductMenu = ({ product }: AdminProductMenuProps) => {
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row gap-3">
             <AlertDialogCancel
-              className="w-full mt-0"
+              className="w-full mt-0 hover:opacity-50"
               onClick={handleCancelAction}
             >
               Voltar
@@ -124,7 +148,7 @@ const AdminProductMenu = ({ product }: AdminProductMenuProps) => {
             <AlertDialogAction
               // disabled={isDeleteLoading}
               className="w-full bg-red-500 text-dark hover:bg-red-300"
-              // onClick={handleCancelBookingClick}
+              onClick={handleDeleteProduct}
             >
               {/* {isDeleteLoading && (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />

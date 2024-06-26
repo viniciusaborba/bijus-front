@@ -34,14 +34,18 @@ export default async function Home() {
     <div className="flex flex-col gap-8 py-8 w-screen">
       <WelcomeMessage />
 
-      <div className="px-5">
-        <Categories />
-      </div>
+      {userRole === "USER" && (
+        <div className="px-5">
+          <Categories />
+        </div>
+      )}
 
-      <div>
-        <SectionTitle>Ofertas</SectionTitle>
-        <ProductListArray products={offers} />
-      </div>
+      {offers.length > 0 && (
+        <div>
+          <SectionTitle>Ofertas</SectionTitle>
+          <ProductListArray products={offers} />
+        </div>
+      )}
 
       <div>
         <SectionTitle>Colares</SectionTitle>

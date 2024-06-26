@@ -5,7 +5,6 @@ import { ProductWithTotalPrice } from "@/app/_helpers/product-with-total-price";
 import { getUserRole } from "@/app/(store)/actions/get-user-role";
 
 import AdminProductMenu from "./ui/admin-product-menu";
-
 interface ProductItemProps {
   product: ProductWithTotalPrice;
 }
@@ -34,7 +33,6 @@ export const ProductItem = async ({ product }: ProductItemProps) => {
 
             <div className="pl-5 flex items-center justify-center">
               <AdminProductMenu product={product} />
-              {/* <AdminProductMenuSelect product={product} /> */}
             </div>
           </div>
         </>

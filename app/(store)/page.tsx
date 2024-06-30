@@ -5,6 +5,8 @@ import { SectionTitle } from "@/components/section-title";
 import { ProductList } from "@/components/product-list";
 import { ProductListArray } from "@/components/product-list-array";
 import { getUserRole } from "./actions/get-user-role";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface GetUserResponse {
   user: User;
@@ -33,6 +35,16 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-8 py-8 w-screen">
       <WelcomeMessage />
+
+      {userRole === "ADMIN" && (
+        <div className="px-5">
+          <Link href="/register-product">
+            <Button className="flex flex-start bg-purple-dark hover:bg-purple">
+              Adicionar produto
+            </Button>
+          </Link>
+        </div>
+      )}
 
       {userRole === "USER" && (
         <div className="px-5">

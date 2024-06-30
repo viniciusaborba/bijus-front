@@ -70,7 +70,10 @@ const AdminProductMenu = ({ product }: AdminProductMenuProps) => {
     <AlertDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="hover:opacity-70">
+          <Button
+            variant="outline"
+            className="bg-purple-dark hover:bg-purple text-white"
+          >
             Opções
           </Button>
         </DropdownMenuTrigger>

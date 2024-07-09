@@ -3,29 +3,39 @@
 import { useContext } from "react";
 import { Separator } from "./separator";
 import { Button } from "./button";
-// import { createCheckout } from "@/actions/checkout";
-// import { loadStripe } from "@stripe/stripe-js"
-// import { useSession } from "next-auth/react";
-// import { createOrder } from "@/actions/order";
 import { CartContext } from "@/app/providers/cart";
+import { useCookies } from "next-client-cookies";
+import { createOrder } from "@/app/(store)/actions/create-order";
+import { useRouter } from "next/navigation";
 
 const CartPriceInfo = () => {
   const { products, subTotal, total, totalDiscount } = useContext(CartContext);
 
-  //   const handlePurchase = async () => {
-  //     if (!data?.user) {
-  //       return;
-  //     }
+  const cookies = useCookies();
+  const router = useRouter();
 
-  //     const order = await createOrder(products, (data!.user as any).id);
+  const handlePurchase = async () => {
+    try {
+      console.log("handle purchase called");
 
-  //     const checkout = await createCheckout(products, order.id);
+      const userId = cookies.get("user_id");
 
-  //     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+      if (!userId) {
+        return;
+      }
 
-  //     stripe?.redirectToCheckout({
-  //       sessionId: checkout.id,
-  //     });
+      await createOrder(products, userId!);
+
+      localStorage.removeItem("bijus/cart-products");
+      console.log("Cart products removed");
+
+      // Navegar para outra página
+      router.push("/catalog");
+      console.log("Navigating to catalog");
+    } catch (error) {
+      console.log("erro");
+    }
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -57,7 +67,9 @@ const CartPriceInfo = () => {
         <p>R${total.toFixed(2)}</p>
       </div>
 
-      <Button className="font-bold uppercase mt-7">Finalizar compra</Button>
+      <Button className="font-bold uppercase mt-7" onClick={handlePurchase}>
+        Finalizar compra
+      </Button>
     </div>
   );
 };

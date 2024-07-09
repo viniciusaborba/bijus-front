@@ -33,7 +33,7 @@ export default async function Home() {
   const offers: Product[] = data.offers;
 
   return (
-    <div className="flex flex-col gap-8 py-8 w-screen">
+    <div className="flex flex-col gap-8 py-8 w-screen px-5">
       <WelcomeMessage />
 
       {userRole === "ADMIN" && (
